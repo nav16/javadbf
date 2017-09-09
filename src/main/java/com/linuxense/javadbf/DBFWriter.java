@@ -29,6 +29,9 @@ import java.io.IOException;
 import java.io.OutputStream;
 import java.io.RandomAccessFile;
 import java.nio.charset.StandardCharsets;
+import java.time.LocalDate;
+import java.time.ZoneId;
+import java.time.ZonedDateTime;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
@@ -246,7 +249,7 @@ public class DBFWriter extends DBFBase implements java.io.Closeable {
 				break;
 
 			case DATE:
-				if (!(value instanceof Date)) {
+				if (!(value instanceof LocalDate)) {
 					throw new DBFException("Invalid value for field " + i + ":" + value);
 				}
 				break;
@@ -353,8 +356,7 @@ public class DBFWriter extends DBFBase implements java.io.Closeable {
 
 			case DATE:
 				if (objectArray[j] != null) {
-					GregorianCalendar calendar = new GregorianCalendar();
-					calendar.setTime((Date) objectArray[j]);
+					GregorianCalendar calendar = GregorianCalendar.from(((LocalDate) objectArray[j]).atStartOfDay(ZoneId.systemDefault()));
 					dataOutput.write(String.valueOf(calendar.get(Calendar.YEAR)).getBytes(StandardCharsets.US_ASCII));
 					dataOutput.write(DBFUtils.textPadding(String.valueOf(calendar.get(Calendar.MONTH) + 1),
 							StandardCharsets.US_ASCII, 2, DBFAlignment.RIGHT, (byte) '0'));

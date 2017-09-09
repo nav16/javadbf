@@ -19,6 +19,7 @@ License along with this library.  If not, see <http://www.gnu.org/licenses/>.
 package com.linuxense.javadbf;
 
 import java.io.IOException;
+import java.time.LocalDate;
 import java.util.Date;
 
 import org.junit.Assert;
@@ -33,9 +34,9 @@ public class DBFWriterStreamTest {
 		NullOutputStream output = new NullOutputStream();
 		try ( DBFWriter writer = new DBFWriter(output)) {
 			writer.setFields(generateFields());
-			writer.addRecord(new Object[] { 1, "Neo", 10001.10, new Date(), true });
-			writer.addRecord(new Object[] { 2, "Morfeo", 1000.0, new Date(), true });
-			writer.addRecord(new Object[] { 2, "Smith", null, new Date(), false });
+			writer.addRecord(new Object[] { 1, "Neo", 10001.10, LocalDate.now(), true });
+			writer.addRecord(new Object[] { 2, "Morfeo", 1000.0, LocalDate.now(), true });
+			writer.addRecord(new Object[] { 2, "Smith", null, LocalDate.now(), false });
 			writer.addRecord(new Object[] { null, null, null, null, null });
 		}
 		Assert.assertEquals(562L, output.getCount());
@@ -78,7 +79,7 @@ public class DBFWriterStreamTest {
 	public void testFieldsSetBeforeRecordData() throws DBFException {
 		NullOutputStream output = new NullOutputStream();
 		try (DBFWriter writer = new DBFWriter(output)) {
-			writer.addRecord(new Object[] { 1, "John Smith", 1000.10, new Date(), false });
+			writer.addRecord(new Object[] { 1, "John Smith", 1000.10, LocalDate.now(), false });
 		}
 	}
 
@@ -105,7 +106,7 @@ public class DBFWriterStreamTest {
 		NullOutputStream output = new NullOutputStream();
 		try (DBFWriter writer = new DBFWriter(output)) {
 			writer.setFields(generateFields());
-			writer.addRecord(new Object[] { 1, 5, 10001.10, new Date(), true });
+			writer.addRecord(new Object[] { 1, 5, 10001.10, LocalDate.now(), true });
 		}
 	}
 
@@ -114,7 +115,7 @@ public class DBFWriterStreamTest {
 		NullOutputStream output = new NullOutputStream();
 		try (DBFWriter writer = new DBFWriter(output)) {
 			writer.setFields(generateFields());
-			writer.addRecord(new Object[] { "1", "Neo", 10001.10, new Date(), true });
+			writer.addRecord(new Object[] { "1", "Neo", 10001.10, LocalDate.now(), true });
 		}
 	}
 
@@ -123,7 +124,7 @@ public class DBFWriterStreamTest {
 		NullOutputStream output = new NullOutputStream();
 		try (DBFWriter writer = new DBFWriter(output)) {
 			writer.setFields(generateFields());
-			writer.addRecord(new Object[] { 1, "Neo", "10001.10", new Date(), true });
+			writer.addRecord(new Object[] { 1, "Neo", "10001.10", LocalDate.now(), true });
 		}
 	}
 
@@ -132,7 +133,7 @@ public class DBFWriterStreamTest {
 		NullOutputStream output = new NullOutputStream();
 		try (DBFWriter writer = new DBFWriter(output)) {
 			writer.setFields(generateFields());
-			writer.addRecord(new Object[] { 1, "Neo", 10001.10, "new Date()", true });
+			writer.addRecord(new Object[] { 1, "Neo", 10001.10, "LocalDate.now()", true });
 		}
 	}
 
@@ -141,7 +142,7 @@ public class DBFWriterStreamTest {
 		NullOutputStream output = new NullOutputStream();
 		try (DBFWriter writer = new DBFWriter(output)) {
 			writer.setFields(generateFields());
-			writer.addRecord(new Object[] { 1, "Neo", 10001.10, new Date(), "true" });
+			writer.addRecord(new Object[] { 1, "Neo", 10001.10, LocalDate.now(), "true" });
 		}
 	}
 
@@ -149,7 +150,7 @@ public class DBFWriterStreamTest {
 	public void testFieldsLengthSameAsHeaders() throws DBFException {
 		NullOutputStream output = new NullOutputStream();
 		try (DBFWriter writer = new DBFWriter(output)){
-			writer.addRecord(new Object[] { 1, "John Smith", 1000.10, new Date() });
+			writer.addRecord(new Object[] { 1, "John Smith", 1000.10, LocalDate.now() });
 		}
 	}
 
